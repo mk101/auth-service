@@ -20,6 +20,8 @@
 		<java.version>17</java.version>
 		<lombok.version>1.18.30</lombok.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
+		<jbcrypt.version>0.4</jbcrypt.version>
 	</properties>
 
 	<dependencies>
@@ -41,6 +43,24 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>${nimbus-jose-jwt.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>${jbcrypt.version}</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -60,11 +80,6 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.projectlombok</groupId>-->
-<!--			<artifactId>lombok-mapstruct-binding</artifactId>-->
-<!--			<version>0.2.0</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

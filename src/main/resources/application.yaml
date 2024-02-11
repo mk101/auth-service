@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/mapping_service
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 25
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+
+redis:
+  host: localhost
+  port: 6379
+  password: redis
+
+app:
+  access-ttl: 600 # sec
+  refresh-ttl: 864000 # sec
+  keys:
+    public-path: classpath:keys/public.key
+    private-path: classpath:keys/private.key
+  jwt:
+    issuer: mapping-service
