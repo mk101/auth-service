@@ -1,8 +1,10 @@
 package kolesov.maksim.mapping.auth.service;
 
+import java.util.List;
+
 public interface JwtService {
 
-    String generate(String sub, Long ttl);
+    String generate(String sub, List<String> roles, Long ttl);
 
     boolean verify(String token);
 

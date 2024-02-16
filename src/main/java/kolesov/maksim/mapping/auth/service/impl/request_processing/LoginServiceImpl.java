@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,9 +40,12 @@ public class LoginServiceImpl implements LoginService {
         }
 
         TokenDto.TokenDtoBuilder builder = TokenDto.builder();
-        builder.access(jwtService.generate(user.getId().toString(), config.getAccessTtl()));
+        List<String> roles = user.getRoles().stream()
+                        .map(e -> e.getRole().toString())
+                        .toList();
+        builder.access(jwtService.generate(user.getId().toString(), roles, config.getAccessTtl()));
 
-        String refresh = jwtService.generate(user.getId().toString(), config.getRefreshTtl());
+        String refresh = jwtService.generate(user.getId().toString(), roles, config.getRefreshTtl());
         RefreshTokenEntity entity = RefreshTokenEntity.builder()
                 .token(refresh)
                 .userId(user.getId())

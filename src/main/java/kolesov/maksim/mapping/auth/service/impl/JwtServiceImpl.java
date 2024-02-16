@@ -18,11 +18,14 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
+
+    private static final String ROLE_CLAIM = "rls";
 
     private final KeyService keyService;
 
@@ -30,11 +33,12 @@ public class JwtServiceImpl implements JwtService {
     private String issuer;
 
     @Override
-    public String generate(String sub, Long ttl) {
+    public String generate(String sub, List<String> roles, Long ttl) {
         try {
             JWSSigner signer = new RSASSASigner(keyService.getPrivateKey());
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(sub)
+                    .claim(ROLE_CLAIM, roles)
                     .expirationTime(Date.from(Instant.now().plus(ttl, ChronoUnit.SECONDS)))
                     .issuer(issuer)
             .build();

@@ -6,12 +6,14 @@ import kolesov.maksim.mapping.auth.exception.ServiceException;
 import kolesov.maksim.mapping.auth.model.RefreshTokenEntity;
 import kolesov.maksim.mapping.auth.service.JwtService;
 import kolesov.maksim.mapping.auth.service.repo.RedisService;
+import kolesov.maksim.mapping.auth.service.repo.UserRoleService;
 import kolesov.maksim.mapping.auth.service.repo.UserService;
 import kolesov.maksim.mapping.auth.service.request_processing.RefreshService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class RefreshServiceImpl implements RefreshService {
 
     private final UserService userService;
+    private final UserRoleService userRoleService;
     private final RedisService redisService;
     private final JwtService jwtService;
 
@@ -41,7 +44,10 @@ public class RefreshServiceImpl implements RefreshService {
         }
 
         TokenDto.TokenDtoBuilder builder = TokenDto.builder();
-        builder.access(jwtService.generate(id.toString(), config.getAccessTtl()));
+        List<String> roles = userRoleService.getRolesByUser(id).stream()
+                        .map(e -> e.getRole().toString())
+                        .toList();
+        builder.access(jwtService.generate(id.toString(), roles, config.getAccessTtl()));
 
         Optional<String> cachedToken = redisService.findTokenByUserId(id);
         if (cachedToken.isPresent()) {
@@ -51,7 +57,7 @@ public class RefreshServiceImpl implements RefreshService {
 
             builder.refresh(cachedToken.get());
         } else {
-            String refresh = jwtService.generate(id.toString(), config.getRefreshTtl());
+            String refresh = jwtService.generate(id.toString(), roles, config.getRefreshTtl());
             builder.refresh(refresh);
 
             RefreshTokenEntity refreshTokenEntity = RefreshTokenEntity.builder()
