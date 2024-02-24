@@ -31,7 +31,7 @@ public class UserServiceImpl extends UserService {
 
     @Override
     public void create(UserEntity entity) {
-        getRepository().createUser(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getLogin(), entity.getPassword());
+        getRepository().createUser(entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getLogin(), entity.getPassword(), entity.getActive());
     }
 
 }

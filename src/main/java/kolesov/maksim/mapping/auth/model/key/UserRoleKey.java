@@ -1,6 +1,6 @@
 package kolesov.maksim.mapping.auth.model.key;
 
-import kolesov.maksim.mapping.auth.model.UserRole;
+import kolesov.maksim.mapping.auth.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,6 @@ public class UserRoleKey implements Serializable {
 
     private UUID userId;
 
-    private UserRole role;
+    private Role role;
 
 }

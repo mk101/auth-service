@@ -17,8 +17,8 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     @Query(
             nativeQuery = true,
-            value = "INSERT INTO \"user\"(id, first_name, last_name, login, password) VALUES (" +
-                        ":id, :first_name, :last_name, :login, :password" +
+            value = "INSERT INTO \"user\"(id, first_name, last_name, login, password, active) VALUES (" +
+                        ":id, :first_name, :last_name, :login, :password, :active" +
                     ")"
     )
     @Modifying
@@ -27,7 +27,8 @@ public interface UserRepository extends CrudRepository<UserEntity, UUID> {
             @Param("first_name") String firstName,
             @Param("last_name") String lastName,
             @Param("login") String login,
-            @Param("password") String password
+            @Param("password") String password,
+            @Param("active") Boolean active
     );
 
 }

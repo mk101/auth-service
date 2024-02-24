@@ -25,7 +25,7 @@ public class UserRoleEntity {
 
     @Id
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(

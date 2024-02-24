@@ -2,7 +2,7 @@ package kolesov.maksim.mapping.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import kolesov.maksim.mapping.auth.model.UserRole;
+import kolesov.maksim.mapping.auth.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +22,6 @@ public class UserRoleDto {
     private UUID userId;
 
     @NotNull
-    private UserRole role;
+    private Role role;
 
 }

@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerHandler {
 
-    private static final String LOG_MESSAGE = "Handle exception";
+    private static final String LOG_MESSAGE = "Handle exception: ";
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDto<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException  e) {
-        log.error(LOG_MESSAGE, e);
+        log.error(LOG_MESSAGE + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ResponseDto<>(false, null, e.getBody().getDetail()));
     }
 
     @ExceptionHandler(value = UnauthorizedException.class)
     ResponseEntity<ResponseDto<Void>> handleAuth(UnauthorizedException e) {
-        log.error(LOG_MESSAGE, e);
+        log.error(LOG_MESSAGE + e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new ResponseDto<>(false, null, e.getMessage()));
     }
 
     @ExceptionHandler(value = ServiceException.class)
     ResponseEntity<ResponseDto<Void>> handleService(ServiceException e) {
-        log.error(LOG_MESSAGE, e);
+        log.error(LOG_MESSAGE + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ResponseDto<>(false, null, e.getMessage()));
     }

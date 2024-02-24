@@ -1,5 +1,6 @@
 package kolesov.maksim.mapping.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Jacksonized
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
     private UUID id;
@@ -35,7 +37,11 @@ public class UserDto {
     @NotEmpty
     private String password;
 
-    @NotNull
     private List<UserRoleDto> roles;
+
+    @NotNull
+    private RoleGroup group;
+
+    private Boolean active;
 
 }

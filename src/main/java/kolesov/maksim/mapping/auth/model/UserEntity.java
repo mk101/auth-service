@@ -33,6 +33,9 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Boolean active;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRoleEntity> roles;
 

@@ -1,11 +1,10 @@
 package kolesov.maksim.mapping.auth.service.impl.request_processing;
 
+import kolesov.maksim.mapping.auth.dto.RoleGroup;
 import kolesov.maksim.mapping.auth.dto.UserDto;
-import kolesov.maksim.mapping.auth.dto.UserRoleDto;
 import kolesov.maksim.mapping.auth.exception.ServiceException;
 import kolesov.maksim.mapping.auth.mapper.UserMapper;
 import kolesov.maksim.mapping.auth.model.UserEntity;
-import kolesov.maksim.mapping.auth.model.UserRole;
 import kolesov.maksim.mapping.auth.model.UserRoleEntity;
 import kolesov.maksim.mapping.auth.service.repo.UserRoleService;
 import kolesov.maksim.mapping.auth.service.repo.UserService;
@@ -34,14 +33,12 @@ public class RegisterServiceImpl implements RegisterService {
             throw new ServiceException("User with this login already exists");
         }
 
-        for (UserRoleDto r : userDto.getRoles()) {
-            if (r.getRole() == UserRole.ADMIN) {
-                throw new ServiceException("Please contact with system owner to create a admin account");
-            }
+        if (userDto.getGroup() == RoleGroup.ADMIN) {
+            throw new ServiceException("Please contact with system owner to create a admin account");
         }
 
-
         UserEntity user = mapper.toEntity(userDto);
+        user.setActive(true);
 
         user.setId(UUID.randomUUID());
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
