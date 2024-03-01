@@ -26,6 +26,10 @@ import java.util.List;
 public class JwtServiceImpl implements JwtService {
 
     private static final String ROLE_CLAIM = "rls";
+    private static final String TYPE_CLAIM = "typ";
+
+    private static final String ACCESS = "access";
+    private static final String REFRESH = "refresh";
 
     private final KeyService keyService;
 
@@ -33,12 +37,13 @@ public class JwtServiceImpl implements JwtService {
     private String issuer;
 
     @Override
-    public String generate(String sub, List<String> roles, Long ttl) {
+    public String generate(String sub, List<String> roles, Long ttl, boolean access) {
         try {
             JWSSigner signer = new RSASSASigner(keyService.getPrivateKey());
             JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                     .subject(sub)
                     .claim(ROLE_CLAIM, roles)
+                    .claim(TYPE_CLAIM, access ? ACCESS : REFRESH)
                     .expirationTime(Date.from(Instant.now().plus(ttl, ChronoUnit.SECONDS)))
                     .issuer(issuer)
             .build();

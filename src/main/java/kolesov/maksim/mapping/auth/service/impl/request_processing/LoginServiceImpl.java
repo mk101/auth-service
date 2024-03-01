@@ -43,9 +43,9 @@ public class LoginServiceImpl implements LoginService {
         List<String> roles = user.getRoles().stream()
                         .map(e -> e.getRole().toString())
                         .toList();
-        builder.access(jwtService.generate(user.getId().toString(), roles, config.getAccessTtl()));
+        builder.access(jwtService.generate(user.getId().toString(), roles, config.getAccessTtl(), true));
 
-        String refresh = jwtService.generate(user.getId().toString(), roles, config.getRefreshTtl());
+        String refresh = jwtService.generate(user.getId().toString(), roles, config.getRefreshTtl(), false);
         RefreshTokenEntity entity = RefreshTokenEntity.builder()
                 .token(refresh)
                 .userId(user.getId())

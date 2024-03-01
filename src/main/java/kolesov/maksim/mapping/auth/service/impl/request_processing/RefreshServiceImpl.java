@@ -47,7 +47,7 @@ public class RefreshServiceImpl implements RefreshService {
         List<String> roles = userRoleService.getRolesByUser(id).stream()
                         .map(e -> e.getRole().toString())
                         .toList();
-        builder.access(jwtService.generate(id.toString(), roles, config.getAccessTtl()));
+        builder.access(jwtService.generate(id.toString(), roles, config.getAccessTtl(), true));
 
         Optional<String> cachedToken = redisService.findTokenByUserId(id);
         if (cachedToken.isPresent()) {
@@ -57,7 +57,7 @@ public class RefreshServiceImpl implements RefreshService {
 
             builder.refresh(cachedToken.get());
         } else {
-            String refresh = jwtService.generate(id.toString(), roles, config.getRefreshTtl());
+            String refresh = jwtService.generate(id.toString(), roles, config.getRefreshTtl(), false);
             builder.refresh(refresh);
 
             RefreshTokenEntity refreshTokenEntity = RefreshTokenEntity.builder()
