@@ -14,8 +14,7 @@ public enum Role {
     EDIT_OWN_MAP,
     EDIT_ANY_MAP(true),
 
-    EDIT_USERS(true),
-    BAN_USER(true)
+    EDIT_USERS(true)
     ;
 
     private final boolean isAdminRole;
