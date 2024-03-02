@@ -21,4 +21,7 @@ public interface AuthController {
     @PostMapping("/refresh")
     ResponseDto<TokenDto> refresh(@RequestBody @Valid TokenDto tokenDto);
 
+    @PostMapping("/logout")
+    ResponseDto<Void> logout(@RequestBody @Valid TokenDto tokenDto);
+
 }

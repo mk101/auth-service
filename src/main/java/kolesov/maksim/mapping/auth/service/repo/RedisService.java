@@ -14,4 +14,6 @@ public abstract class RedisService extends AbstractRepoService<RefreshTokenRepos
 
     public abstract Optional<String> findTokenByUserId(UUID id);
 
+    public abstract void delete(UUID id);
+
 }

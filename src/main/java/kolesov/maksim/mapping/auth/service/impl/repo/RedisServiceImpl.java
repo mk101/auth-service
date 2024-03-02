@@ -24,4 +24,14 @@ public class RedisServiceImpl extends RedisService {
         return getRepository().findById(id).map(RefreshTokenEntity::getToken);
     }
 
+    @Override
+    public void delete(UUID id) {
+        Optional<RefreshTokenEntity> entity = findById(id);
+        if (entity.isEmpty()) {
+            return;
+        }
+
+        getRepository().delete(entity.get());
+    }
+
 }

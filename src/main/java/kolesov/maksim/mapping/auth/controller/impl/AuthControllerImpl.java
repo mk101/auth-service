@@ -6,6 +6,7 @@ import kolesov.maksim.mapping.auth.dto.ResponseDto;
 import kolesov.maksim.mapping.auth.dto.TokenDto;
 import kolesov.maksim.mapping.auth.dto.UserDto;
 import kolesov.maksim.mapping.auth.service.request_processing.LoginService;
+import kolesov.maksim.mapping.auth.service.request_processing.LogoutService;
 import kolesov.maksim.mapping.auth.service.request_processing.RefreshService;
 import kolesov.maksim.mapping.auth.service.request_processing.RegisterService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class AuthControllerImpl implements AuthController {
     private final LoginService loginService;
     private final RegisterService registerService;
     private final RefreshService refreshService;
+    private final LogoutService logoutService;
 
     @Override
     @SneakyThrows
@@ -38,6 +40,13 @@ public class AuthControllerImpl implements AuthController {
     @SneakyThrows
     public ResponseDto<TokenDto> refresh(TokenDto tokenDto) {
         return new ResponseDto<>(refreshService.refresh(tokenDto));
+    }
+
+    @Override
+    public ResponseDto<Void> logout(TokenDto tokenDto) {
+        logoutService.logout(tokenDto.getRefresh());
+
+        return new ResponseDto<>(null);
     }
 
 }
