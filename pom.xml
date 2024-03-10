@@ -22,6 +22,7 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
 		<jbcrypt.version>0.4</jbcrypt.version>
+		<logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
 	</properties>
 
 	<dependencies>
@@ -47,6 +48,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash-logback-encoder.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
@@ -62,7 +69,6 @@
 			<artifactId>jbcrypt</artifactId>
 			<version>${jbcrypt.version}</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
