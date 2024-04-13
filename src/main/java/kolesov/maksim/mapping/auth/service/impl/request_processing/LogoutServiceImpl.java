@@ -12,8 +12,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LogoutServiceImpl implements LogoutService {
 
-    private JwtService jwtService;
-    private RedisService redisService;
+    private final JwtService jwtService;
+    private final RedisService redisService;
 
     @Override
     public void logout(String refreshToken) {
